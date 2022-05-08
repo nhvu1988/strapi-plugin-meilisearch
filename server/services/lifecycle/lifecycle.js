@@ -22,11 +22,13 @@ module.exports = ({ strapi }) => {
           const meilisearch = strapi
             .plugin('meilisearch')
             .service('meilisearch')
-
+          const fullEntry = await strapi.entityService.findOne(contentTypeUid, result.id, {
+            populate: '*',
+          });
           meilisearch
             .addEntriesToMeilisearch({
               contentType: contentTypeUid,
-              entries: result,
+              entries: [fullEntry],
             })
             .catch(e => {
               strapi.log.error(
@@ -44,11 +46,13 @@ module.exports = ({ strapi }) => {
           const meilisearch = strapi
             .plugin('meilisearch')
             .service('meilisearch')
-
+          const fullEntry = await strapi.entityService.findOne(contentTypeUid, result.id, {
+            populate: '*',
+          });
           meilisearch
             .updateEntriesInMeilisearch({
               contentType: contentTypeUid,
-              entries: [result],
+              entries: [fullEntry],
             })
             .catch(e => {
               strapi.log.error(
